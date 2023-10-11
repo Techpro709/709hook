@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>709 Webhook</title>
+  <style>
+    body {
+      background: linear-gradient(135deg, #87CEFA, #FFB6C1);
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.7);
+      border-radius: 10px;
+      margin: 20px auto;
+      width: 300px;
+    }
+    h1 {
+      color: #333;
+    }
+    #message {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 10px 0;
+    }
+    #submit-button {
+      background-color: #333;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>709 Webhook</h1>
+    <form id="webhook-form">
+      <input type="text" id="message" placeholder="Enter your message">
+      <button type="submit" id="submit-button">Submit</button>
+    </form>
+  </div>
+  <script>
+    const webhookUrl = "https://discord.com/api/webhooks/1161757235219808316/e-Bc4btrBLwmWfoW-VD_ekqnTyF-M1kJccLaTGNZhZXv402HZGgIt7Fn9q5vYJ7CDDJb";
+    
+    const form = document.getElementById("webhook-form");
+    const messageInput = document.getElementById("message");
+    
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const message = messageInput.value;
+      sendMessageToWebhook(message);
+      messageInput.value = "";
+    });
+    
+    function sendMessageToWebhook(message) {
+      fetch(webhookUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ content: message }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Message sent successfully.");
+          } else {
+            console.error("Failed to send message.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  </script>
+</body>
+</html>
